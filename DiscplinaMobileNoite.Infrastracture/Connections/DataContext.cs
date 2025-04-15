@@ -19,6 +19,8 @@ namespace DiscplinaMobileNoite.Infrastracture.Connections
         }
 
         public DbSet<UserEntity> UserEntity { get; set; }
+        public DbSet<PointEntity> PointsEntity { get; set; }
+        public DbSet<JustificationEntity> JustificationEntity { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

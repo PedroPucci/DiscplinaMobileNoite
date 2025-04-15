@@ -11,10 +11,36 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW
         private readonly DataContext _context;
         private bool _disposed = false;
         private IUserRepository? _userEntityRepository = null;
+        private IPointsRepository? _attendanceRecord = null;
+        private IJustificationRepository? _attendanceJustification = null;
 
         public RepositoryUoW(DataContext context)
         {
             _context = context;
+        }
+
+        public IPointsRepository AttendanceRecordRepository
+        {
+            get
+            {
+                if (_attendanceRecord is null)
+                {
+                    _attendanceRecord = new PointsRepository(_context);
+                }
+                return _attendanceRecord;
+            }
+        }
+
+        public IJustificationRepository AttendanceJustificationRepository
+        {
+            get
+            {
+                if (_attendanceJustification is null)
+                {
+                    _attendanceJustification = new JustificationRepository(_context);
+                }
+                return _attendanceJustification;
+            }
         }
 
         public IUserRepository UserRepository

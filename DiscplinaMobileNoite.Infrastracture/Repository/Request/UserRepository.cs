@@ -40,8 +40,9 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
                 {
                     Id = user.Id,
                     Email = user.Email,
-                    Cpf = user.Cpf,
-                    JobTitle = user.JobTitle,
+                    FullName = user.FullName,
+                    PhoneNumber = user.PhoneNumber,
+                    Workload = user.Workload,                    
                 })
                 .ToListAsync();
         }

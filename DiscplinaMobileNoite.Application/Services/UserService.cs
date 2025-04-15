@@ -31,8 +31,6 @@ namespace DiscplinaMobileNoite.Application.Services
                 }
 
                 userEntity.Email = userEntity.Email?.Trim().ToLower();
-                userEntity.Cpf = userEntity.Cpf;
-                userEntity.JobTitle = userEntity.JobTitle;
                 var result = await _repositoryUoW.UserRepository.Add(userEntity);
 
                 await _repositoryUoW.SaveAsync();
@@ -84,10 +82,8 @@ namespace DiscplinaMobileNoite.Application.Services
                 if (userById is null)
                     throw new InvalidOperationException("Error updating User");
 
-                userById.Cpf = userEntity.Cpf;
                 userById.Email = userEntity.Email;
-                userById.JobTitle = userEntity.JobTitle;
-
+                
                 _repositoryUoW.UserRepository.Update(userById);
 
                 await _repositoryUoW.SaveAsync();

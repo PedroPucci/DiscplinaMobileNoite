@@ -1,4 +1,5 @@
-﻿using DiscplinaMobileNoite.Infrastracture.Repository.Interfaces;
+﻿using DiscplinaMobileNoite.Domain.Entity;
+using DiscplinaMobileNoite.Infrastracture.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW
@@ -6,6 +7,8 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW
     public interface IRepositoryUoW
     {
         IUserRepository UserRepository { get; }
+        IPointsRepository AttendanceRecordRepository { get; }
+        IJustificationRepository AttendanceJustificationRepository { get; }
 
         Task SaveAsync();
         void Commit();
