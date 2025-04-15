@@ -5,13 +5,13 @@ using FluentValidation;
 
 namespace DiscplinaMobileNoite.Shared.Validator
 {
-    public class AttendanceRecordRequestValidator : AbstractValidator<PointEntity>
+    public class PointRequestValidator : AbstractValidator<PointEntity>
     {
-        public AttendanceRecordRequestValidator()
+        public PointRequestValidator()
         {
             RuleFor(p => p.MorningEntry)
                 .NotEmpty()
-                    .WithMessage(AttendanceRecordErrors.AttendanceRecord_Error_CheckInCanNotBeNullOrEmpty.Description());
+                    .WithMessage(PointErrors.AttendanceRecord_Error_CheckInCanNotBeNullOrEmpty.Description());
         }
     }
 }

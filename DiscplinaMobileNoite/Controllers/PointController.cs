@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace DiscplinaMobileNoite.Controllers
 {
     [ApiController]
-    [Route("api/v1/attendanceRecords")]
-    public class AttendanceRecordController : Controller
+    [Route("api/v1/points")]
+    public class PointController : Controller
     {
         private readonly IUnitOfWorkService _serviceUoW;
 
-        public AttendanceRecordController(IUnitOfWorkService unitOfWorkService)
+        public PointController(IUnitOfWorkService unitOfWorkService)
         {
             _serviceUoW = unitOfWorkService;
         }

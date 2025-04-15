@@ -80,7 +80,7 @@ namespace DiscplinaMobileNoite.Application.Services
 
         private async Task<Result<JustificationEntity>> IsValidAttendanceJustificationRequest(JustificationEntity attendanceJustificationEntity)
         {
-            var requestValidator = await new AttendanceJustificationRequestValidator().ValidateAsync(attendanceJustificationEntity);
+            var requestValidator = await new JustificationRequestValidator().ValidateAsync(attendanceJustificationEntity);
             if (!requestValidator.IsValid)
             {
                 string errorMessage = string.Join(" ", requestValidator.Errors.Select(e => e.ErrorMessage));

@@ -23,12 +23,8 @@ namespace DiscplinaMobileNoite.Extensions
                 {
                     Version = "v1",
                     Title = "API Mobile",
-                    Description = @"
-                    Api mobile
-                ",
+                    Description = @"Mobile application to track interns' daily time records.",
                 });
-
-
                 opt.OperationFilter<CustomOperationDescriptions>();
             });
 

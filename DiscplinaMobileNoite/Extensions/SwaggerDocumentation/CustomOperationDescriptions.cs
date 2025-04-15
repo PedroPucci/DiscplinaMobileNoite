@@ -13,8 +13,8 @@ namespace DiscplinaMobileNoite.Extensions.SwaggerDocumentation
             var routeHandlers = new Dictionary<string, Action>
                 {
                     { "user", () => HandleUserOperations(operation, context) },
-                    { "attendanceRecord", () => HandleAttendanceRecordOperations(operation, context) },
-                    { "attendanceJustification", () => HandleAttendanceJustificationOperations(operation, context) }
+                    { "points", () => HandlePointOperations(operation, context) },
+                    { "justification", () => HandleJustificationOperations(operation, context) }
                 };
 
             foreach (var routeHandler in routeHandlers)
@@ -68,54 +68,54 @@ namespace DiscplinaMobileNoite.Extensions.SwaggerDocumentation
             }
         }
 
-        private void HandleAttendanceRecordOperations(OpenApiOperation operation, OperationFilterContext context)
+        private void HandlePointOperations(OpenApiOperation operation, OperationFilterContext context)
         {
             var method = context.ApiDescription.HttpMethod;
             var path = context.ApiDescription.RelativePath?.ToLower() ?? string.Empty;
 
             if (method == "POST")
             {
-                operation.Summary = "Create a new attendance Record";
-                operation.Description = "This endpoint allows you to create a new attendance Record by providing the necessary details.";
-                AddResponses(operation, "200", "The attendance Record was successfully created.");
+                operation.Summary = "Create a new point";
+                operation.Description = "This endpoint allows you to create a new point.";
+                AddResponses(operation, "200", "The point was successfully created.");
             }
             else if (method == "PUT")
             {
-                operation.Summary = "Update an existing attendance Record";
-                operation.Description = "This endpoint allows you to update an existing attendance Record by providing the necessary details.";
-                AddResponses(operation, "200", "The attendance Record was successfully updated.");
+                operation.Summary = "Update an existing point";
+                operation.Description = "This endpoint allows you to update an existing point.";
+                AddResponses(operation, "200", "The point was successfully updated.");
             }
             else if (method == "GET")
             {
                 if (path.Contains("allactives"))
                 {
-                    operation.Summary = "Retrieve all active attendance Records";
-                    operation.Description = "This endpoint returns all attendance Records where IsActive is true.";
+                    operation.Summary = "Retrieve all active points";
+                    operation.Description = "This endpoint returns all poins where IsActive is true.";
                     AddResponses(operation, "200", "All active attendance Records were successfully retrieved.");
                 }
                 else if (path.Contains("all"))
                 {
-                    operation.Summary = "Retrieve all attendance Records";
-                    operation.Description = "This endpoint allows you to retrieve details of all existing attendance Records.";
-                    AddResponses(operation, "200", "All attendance Records details were successfully retrieved.");
+                    operation.Summary = "Retrieve all points";
+                    operation.Description = "This endpoint allows you to retrieve details of all existing points.";
+                    AddResponses(operation, "200", "All points details were successfully retrieved.");
                 }
             }
         }
 
-        private void HandleAttendanceJustificationOperations(OpenApiOperation operation, OperationFilterContext context)
+        private void HandleJustificationOperations(OpenApiOperation operation, OperationFilterContext context)
         {
             var method = context.ApiDescription.HttpMethod;
             var path = context.ApiDescription.RelativePath?.ToLower() ?? string.Empty;
 
             if (method == "POST")
             {
-                operation.Summary = "Create a new Attendance Justification";
-                operation.Description = "This endpoint allows you to create a new attendance Record by providing the necessary details.";
-                AddResponses(operation, "200", "The attendance Record was successfully created.");
+                operation.Summary = "Create a new Justification";
+                operation.Description = "This endpoint allows you to create a new justification by providing the necessary details.";
+                AddResponses(operation, "200", "The justification was successfully created.");
             }
             else if (method == "PUT")
             {
-                operation.Summary = "Update an existing attendance Record";
+                operation.Summary = "Update an existing justification";
                 operation.Description = "This endpoint allows you to update an existing attendance Record by providing the necessary details.";
                 AddResponses(operation, "200", "The attendance Record was successfully updated.");
             }
@@ -123,15 +123,15 @@ namespace DiscplinaMobileNoite.Extensions.SwaggerDocumentation
             {
                 if (path.Contains("allactives"))
                 {
-                    operation.Summary = "Retrieve all active attendance Records";
-                    operation.Description = "This endpoint returns all attendance Records where IsActive is true.";
-                    AddResponses(operation, "200", "All active attendance Records were successfully retrieved.");
+                    operation.Summary = "Retrieve all active justifications";
+                    operation.Description = "This endpoint returns all justifications where IsActive is true.";
+                    AddResponses(operation, "200", "All active justifications were successfully retrieved.");
                 }
                 else if (path.Contains("all"))
                 {
-                    operation.Summary = "Retrieve all attendance Records";
-                    operation.Description = "This endpoint allows you to retrieve details of all existing attendance Records.";
-                    AddResponses(operation, "200", "All attendance Records details were successfully retrieved.");
+                    operation.Summary = "Retrieve all justifications";
+                    operation.Description = "This endpoint allows you to retrieve details of all existing justifications.";
+                    AddResponses(operation, "200", "All justifications details were successfully retrieved.");
                 }
             }
         }

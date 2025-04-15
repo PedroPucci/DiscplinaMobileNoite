@@ -30,6 +30,9 @@ namespace DiscplinaMobileNoite.Application.Services
                     return Result<PointEntity>.Error(isValidAttendanceRecord.Message);
                 }
 
+                attendanceRecordEntity.CreatedAt = DateTime.SpecifyKind(attendanceRecordEntity.CreatedAt, DateTimeKind.Utc);
+                attendanceRecordEntity.Date = DateTime.SpecifyKind(attendanceRecordEntity.Date, DateTimeKind.Utc);
+
                 var result = await _repositoryUoW.AttendanceRecordRepository.Add(attendanceRecordEntity);
 
                 await _repositoryUoW.SaveAsync();
@@ -72,7 +75,7 @@ namespace DiscplinaMobileNoite.Application.Services
         }
         private async Task<Result<PointEntity>> IsValidAttendanceRecordRequest(PointEntity attendanceRecordEntity)
         {
-            var requestValidator = await new AttendanceRecordRequestValidator().ValidateAsync(attendanceRecordEntity);
+            var requestValidator = await new PointRequestValidator().ValidateAsync(attendanceRecordEntity);
             if (!requestValidator.IsValid)
             {
                 string errorMessage = string.Join(" ", requestValidator.Errors.Select(e => e.ErrorMessage));

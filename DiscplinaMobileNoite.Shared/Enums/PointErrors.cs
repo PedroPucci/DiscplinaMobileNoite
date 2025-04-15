@@ -2,9 +2,9 @@
 
 namespace DiscplinaMobileNoite.Shared.Enums
 {
-    public enum AttendanceRecordErrors
+    public enum PointErrors
     {
-        [Description("'CheckIn' can not be null or empty!")]
+        [Description("'MorningEntry' can not be null or empty!")]
         AttendanceRecord_Error_CheckInCanNotBeNullOrEmpty,
     }
 }

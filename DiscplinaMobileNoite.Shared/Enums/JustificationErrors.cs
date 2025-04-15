@@ -2,7 +2,7 @@
 
 namespace DiscplinaMobileNoite.Shared.Enums
 {
-    public enum AttendanceJustificationErrors
+    public enum JustificationErrors
     {
         [Description("'Reason' can not be null or empty!")]
         AttendanceJustification_Error_ReasonCanNotBeNullOrEmpty,

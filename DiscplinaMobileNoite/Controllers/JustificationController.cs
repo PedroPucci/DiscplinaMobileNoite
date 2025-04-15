@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace DiscplinaMobileNoite.Controllers
 {
     [ApiController]
-    [Route("api/v1/attendanceJustifications")]
-    public class AttendanceJustificationController : Controller
+    [Route("api/v1/justifications")]
+    public class JustificationController : Controller
     {
         private readonly IUnitOfWorkService _serviceUoW;
 
-        public AttendanceJustificationController(IUnitOfWorkService unitOfWorkService)
+        public JustificationController(IUnitOfWorkService unitOfWorkService)
         {
             _serviceUoW = unitOfWorkService;
         }
-
 
         [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -5,9 +5,9 @@ using FluentValidation;
 
 namespace DiscplinaMobileNoite.Shared.Validator
 {
-    public class AttendanceJustificationRequestValidator : AbstractValidator<JustificationEntity>
+    public class JustificationRequestValidator : AbstractValidator<JustificationEntity>
     {
-        public AttendanceJustificationRequestValidator()
+        public JustificationRequestValidator()
         {
             RuleFor(p => p.Reason)
                 .NotEmpty()
