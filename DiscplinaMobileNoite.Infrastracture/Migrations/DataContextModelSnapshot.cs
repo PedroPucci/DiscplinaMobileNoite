@@ -49,7 +49,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
 
                     b.HasIndex("PointId");
 
-                    b.ToTable("JustificationEntity");
+                    b.ToTable("Justifications");
                 });
 
             modelBuilder.Entity("DiscplinaMobileNoite.Domain.Entity.PointEntity", b =>
@@ -89,7 +89,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PointsEntity");
+                    b.ToTable("Points");
                 });
 
             modelBuilder.Entity("DiscplinaMobileNoite.Domain.Entity.UserEntity", b =>
@@ -125,7 +125,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEntity");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DiscplinaMobileNoite.Domain.Entity.JustificationEntity", b =>

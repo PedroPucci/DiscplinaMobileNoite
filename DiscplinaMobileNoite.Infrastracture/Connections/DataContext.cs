@@ -18,9 +18,9 @@ namespace DiscplinaMobileNoite.Infrastracture.Connections
             optionsBuilder.UseNpgsql(Configuration.GetConnectionString("WebApiDatabase"));
         }
 
-        public DbSet<UserEntity> UserEntity { get; set; }
-        public DbSet<PointEntity> PointsEntity { get; set; }
-        public DbSet<JustificationEntity> JustificationEntity { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<PointEntity> Points { get; set; }
+        public DbSet<JustificationEntity> Justifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -19,7 +19,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
             if (userEntity is null)
                 throw new ArgumentNullException(nameof(userEntity), "User cannot be null");
 
-            var result = await _context.UserEntity.AddAsync(userEntity);
+            var result = await _context.Users.AddAsync(userEntity);
             await _context.SaveChangesAsync();
 
             return result.Entity;
@@ -27,13 +27,13 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
 
         public UserEntity Delete(UserEntity userEntity)
         {
-            var response = _context.UserEntity.Remove(userEntity);
+            var response = _context.Users.Remove(userEntity);
             return response.Entity;
         }
 
         public async Task<List<UserEntity>> Get()
         {
-            return await _context.UserEntity
+            return await _context.Users
                 .AsNoTracking()
                 .OrderBy(user => user.Id)
                 .Select(user => new UserEntity
@@ -49,12 +49,12 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
 
         public async Task<UserEntity?> GetById(int? id)
         {
-            return await _context.UserEntity.FirstOrDefaultAsync(userEntity => userEntity.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(userEntity => userEntity.Id == id);
         }
 
         public UserEntity Update(UserEntity userEntity)
         {
-            var response = _context.UserEntity.Update(userEntity);
+            var response = _context.Users.Update(userEntity);
             return response.Entity;
         }
     }

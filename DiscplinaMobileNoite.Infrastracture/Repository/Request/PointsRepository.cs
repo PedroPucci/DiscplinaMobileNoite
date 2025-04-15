@@ -19,7 +19,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
             if (pointEntity is null)
                 throw new ArgumentNullException(nameof(pointEntity), "Attendance Record cannot be null");
 
-            var result = await _context.PointsEntity.AddAsync(pointEntity);
+            var result = await _context.Points.AddAsync(pointEntity);
             await _context.SaveChangesAsync();
 
             return result.Entity;
@@ -27,7 +27,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
 
         public async Task<List<PointEntity>> Get()
         {
-            return await _context.PointsEntity
+            return await _context.Points
                 .AsNoTracking()
                 .OrderBy(points => points.Id)
                 .Select(points => new PointEntity
@@ -46,12 +46,12 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
 
         public async Task<PointEntity?> GetById(int? id)
         {
-            return await _context.PointsEntity.FirstOrDefaultAsync(pointEntity => pointEntity.Id == id);
+            return await _context.Points.FirstOrDefaultAsync(pointEntity => pointEntity.Id == id);
         }
 
         public PointEntity Update(PointEntity pointEntity)
         {
-            var response = _context.PointsEntity.Update(pointEntity);
+            var response = _context.Points.Update(pointEntity);
             return response.Entity;
         }
     }

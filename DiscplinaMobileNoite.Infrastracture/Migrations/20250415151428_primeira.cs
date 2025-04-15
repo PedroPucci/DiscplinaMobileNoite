@@ -13,7 +13,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UserEntity",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -27,11 +27,11 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserEntity", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PointsEntity",
+                name: "Points",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -47,17 +47,17 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PointsEntity", x => x.Id);
+                    table.PrimaryKey("PK_Points", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PointsEntity_UserEntity_UserId",
+                        name: "FK_Points_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "UserEntity",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "JustificationEntity",
+                name: "Justifications",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -69,23 +69,23 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JustificationEntity", x => x.Id);
+                    table.PrimaryKey("PK_Justifications", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JustificationEntity_PointsEntity_PointId",
+                        name: "FK_Justifications_Points_PointId",
                         column: x => x.PointId,
-                        principalTable: "PointsEntity",
+                        principalTable: "Points",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_JustificationEntity_PointId",
-                table: "JustificationEntity",
+                name: "IX_Justifications_PointId",
+                table: "Justifications",
                 column: "PointId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PointsEntity_UserId",
-                table: "PointsEntity",
+                name: "IX_Points_UserId",
+                table: "Points",
                 column: "UserId");
         }
 
@@ -93,13 +93,13 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "JustificationEntity");
+                name: "Justifications");
 
             migrationBuilder.DropTable(
-                name: "PointsEntity");
+                name: "Points");
 
             migrationBuilder.DropTable(
-                name: "UserEntity");
+                name: "Users");
         }
     }
 }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiscplinaMobileNoite.Infrastracture.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250415132818_primeira")]
+    [Migration("20250415151428_primeira")]
     partial class primeira
     {
         /// <inheritdoc />
@@ -52,7 +52,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
 
                     b.HasIndex("PointId");
 
-                    b.ToTable("JustificationEntity");
+                    b.ToTable("Justifications");
                 });
 
             modelBuilder.Entity("DiscplinaMobileNoite.Domain.Entity.PointEntity", b =>
@@ -92,7 +92,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PointsEntity");
+                    b.ToTable("Points");
                 });
 
             modelBuilder.Entity("DiscplinaMobileNoite.Domain.Entity.UserEntity", b =>
@@ -128,7 +128,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEntity");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("DiscplinaMobileNoite.Domain.Entity.JustificationEntity", b =>
