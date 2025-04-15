@@ -49,7 +49,7 @@ namespace DiscplinaMobileNoite.Application.Services
             {
                 Log.Error(LogMessages.AddingAttendanceJustificationError(ex));
                 transaction.Rollback();
-                throw new InvalidOperationException("Error to add a new Attendance Justification");
+                throw new InvalidOperationException("Error to add a new Justification");
             }
             finally
             {
@@ -71,7 +71,7 @@ namespace DiscplinaMobileNoite.Application.Services
             {
                 Log.Error(LogMessages.GetAllAttendanceJustificationError(ex));
                 transaction.Rollback();
-                throw new InvalidOperationException("Error to loading the list Attendance Record Justification");
+                throw new InvalidOperationException("Error to loading the list Justification");
             }
             finally
             {

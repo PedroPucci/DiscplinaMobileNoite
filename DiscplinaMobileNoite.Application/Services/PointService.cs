@@ -46,7 +46,7 @@ namespace DiscplinaMobileNoite.Application.Services
             {
                 Log.Error(LogMessages.AddingAttendanceRecordError(ex));
                 transaction.Rollback();
-                throw new InvalidOperationException("Error to add a new Attendance Record");
+                throw new InvalidOperationException("Error to add a new Point");
             }
             finally
             {
@@ -67,7 +67,7 @@ namespace DiscplinaMobileNoite.Application.Services
             {
                 Log.Error(LogMessages.GetAllAttendanceRecordError(ex));
                 transaction.Rollback();
-                throw new InvalidOperationException("Error to loading the list Attendance Record");
+                throw new InvalidOperationException("Error to loading the list Points");
             }
             finally
             {
