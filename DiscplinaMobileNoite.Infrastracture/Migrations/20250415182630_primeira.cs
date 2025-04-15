@@ -21,8 +21,8 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
                     FullName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    Workload = table.Column<string>(type: "text", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "text", nullable: false),
+                    Workload = table.Column<int>(type: "integer", nullable: false),
+                    PhoneNumber = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

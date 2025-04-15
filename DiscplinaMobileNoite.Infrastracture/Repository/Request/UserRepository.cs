@@ -1,4 +1,5 @@
-﻿using DiscplinaMobileNoite.Domain.Entity;
+﻿using DiscplinaMobileNoite.Domain.Dto;
+using DiscplinaMobileNoite.Domain.Entity;
 using DiscplinaMobileNoite.Infrastracture.Connections;
 using DiscplinaMobileNoite.Infrastracture.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -31,18 +32,33 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
             return response.Entity;
         }
 
-        public async Task<List<UserEntity>> Get()
+        //public async Task<List<UserEntity>> Get()
+        //{
+        //    return await _context.Users
+        //        .AsNoTracking()
+        //        .OrderBy(user => user.Id)
+        //        .Select(user => new UserEntity
+        //        {
+        //            Id = user.Id,
+        //            Email = user.Email,
+        //            FullName = user.FullName,
+        //            PhoneNumber = user.PhoneNumber,
+        //            Workload = user.Workload,                    
+        //        })
+        //        .ToListAsync();
+        //}
+        public async Task<List<UserResponse>> Get()
         {
             return await _context.Users
                 .AsNoTracking()
                 .OrderBy(user => user.Id)
-                .Select(user => new UserEntity
+                .Select(user => new UserResponse
                 {
                     Id = user.Id,
                     Email = user.Email,
                     FullName = user.FullName,
                     PhoneNumber = user.PhoneNumber,
-                    Workload = user.Workload,                    
+                    Workload = user.Workload,
                 })
                 .ToListAsync();
         }

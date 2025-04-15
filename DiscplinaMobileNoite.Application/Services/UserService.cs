@@ -1,5 +1,6 @@
 ﻿using DiscplinaMobileNoite.Application.ExtensionError;
 using DiscplinaMobileNoite.Application.Services.Interfaces;
+using DiscplinaMobileNoite.Domain.Dto;
 using DiscplinaMobileNoite.Domain.Entity;
 using DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW;
 using DiscplinaMobileNoite.Shared.Logging;
@@ -51,12 +52,12 @@ namespace DiscplinaMobileNoite.Application.Services
             }
         }
 
-        public async Task<List<UserEntity>> Get()
+        public async Task<List<UserResponse>> Get()
         {
             using var transaction = _repositoryUoW.BeginTransaction();
             try
             {
-                List<UserEntity> userEntities = await _repositoryUoW.UserRepository.Get();
+                List<UserResponse> userEntities = await _repositoryUoW.UserRepository.Get();
                 _repositoryUoW.Commit();
                 return userEntities;
             }
@@ -83,6 +84,10 @@ namespace DiscplinaMobileNoite.Application.Services
                     throw new InvalidOperationException("Error updating User");
 
                 userById.Email = userEntity.Email;
+                userById.Password = userEntity.Password;
+                userById.PhoneNumber = userEntity.PhoneNumber;
+                userById.Workload = userEntity.Workload;
+                userById.FullName = userEntity.FullName;
                 
                 _repositoryUoW.UserRepository.Update(userById);
 

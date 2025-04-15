@@ -1,4 +1,5 @@
 ﻿using DiscplinaMobileNoite.Application.ExtensionError;
+using DiscplinaMobileNoite.Domain.Dto;
 using DiscplinaMobileNoite.Domain.Entity;
 
 namespace DiscplinaMobileNoite.Application.Services.Interfaces
@@ -7,6 +8,6 @@ namespace DiscplinaMobileNoite.Application.Services.Interfaces
     {
         Task<Result<UserEntity>> Add(UserEntity userEntity);
         Task<Result<UserEntity>> Update(UserEntity userEntity);
-        Task<List<UserEntity>> Get();
+        Task<List<UserResponse>> Get();
     }
 }

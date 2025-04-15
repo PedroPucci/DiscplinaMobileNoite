@@ -1,4 +1,5 @@
 ﻿using DiscplinaMobileNoite.Application.UnitOfWork;
+using DiscplinaMobileNoite.Domain.Dto;
 using DiscplinaMobileNoite.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,7 +39,7 @@ namespace DiscplinaMobileNoite.Controllers
         }
 
         [HttpGet("All")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserEntity>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserResponse>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Get()
         {

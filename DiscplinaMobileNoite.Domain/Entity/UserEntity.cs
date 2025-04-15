@@ -5,11 +5,11 @@ namespace DiscplinaMobileNoite.Domain.Entity
     public class UserEntity
     {
         public int Id { get; set; }
-        public string FullName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Password { get; set; } = string.Empty;
-        public string Workload { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
+        public string? FullName { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public int Workload { get; set; }
+        public int PhoneNumber { get; set; }
         public DateTime CreatedAt { get; set; }
 
         [JsonIgnore]
