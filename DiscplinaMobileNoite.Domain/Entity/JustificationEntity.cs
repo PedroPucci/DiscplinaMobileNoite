@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using DiscplinaMobileNoite.Domain.Enum;
+using System.Text.Json.Serialization;
 
 namespace DiscplinaMobileNoite.Domain.Entity
 {
@@ -7,7 +8,7 @@ namespace DiscplinaMobileNoite.Domain.Entity
         public int Id { get; set; }
         public int PointId { get; set; }
         public string? Reason { get; set; }
-        public string? Status { get; set; }
+        public JustificationStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
         
         [JsonIgnore]

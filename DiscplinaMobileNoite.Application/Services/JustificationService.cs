@@ -1,6 +1,7 @@
 ﻿using DiscplinaMobileNoite.Application.ExtensionError;
 using DiscplinaMobileNoite.Application.Services.Interfaces;
 using DiscplinaMobileNoite.Domain.Entity;
+using DiscplinaMobileNoite.Domain.Enum;
 using DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW;
 using DiscplinaMobileNoite.Shared.Logging;
 using DiscplinaMobileNoite.Shared.Validator;
@@ -8,11 +9,11 @@ using Serilog;
 
 namespace DiscplinaMobileNoite.Application.Services
 {
-    public class AttendanceJustificationService : IJustificationService
+    public class JustificationService : IJustificationService
     {
         private readonly IRepositoryUoW _repositoryUoW;
 
-        public AttendanceJustificationService(IRepositoryUoW repositoryUoW)
+        public JustificationService(IRepositoryUoW repositoryUoW)
         {
             _repositoryUoW = repositoryUoW;
         }
@@ -34,6 +35,7 @@ namespace DiscplinaMobileNoite.Application.Services
                 {
                     Id = justificationEntity.Id,
                     Reason = justificationEntity.Reason,
+                    Status = JustificationStatus.Pending,
                 };
 
                 var result = await _repositoryUoW.AttendanceJustificationRepository.Add(justification);

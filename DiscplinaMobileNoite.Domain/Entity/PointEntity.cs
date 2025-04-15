@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using DiscplinaMobileNoite.Domain.Enum;
+using System.Text.Json.Serialization;
 
 namespace DiscplinaMobileNoite.Domain.Entity
 {
@@ -11,7 +12,7 @@ namespace DiscplinaMobileNoite.Domain.Entity
         public TimeSpan? MorningExit { get; set; }
         public TimeSpan? AfternoonEntry { get; set; }
         public TimeSpan? AfternoonExit { get; set; }
-        public string? Status { get; set; }
+        public PointStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
 
         [JsonIgnore]

@@ -1,6 +1,7 @@
 ﻿using DiscplinaMobileNoite.Application.ExtensionError;
 using DiscplinaMobileNoite.Application.Services.Interfaces;
 using DiscplinaMobileNoite.Domain.Entity;
+using DiscplinaMobileNoite.Domain.Enum;
 using DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW;
 using DiscplinaMobileNoite.Shared.Logging;
 using DiscplinaMobileNoite.Shared.Validator;
@@ -8,11 +9,11 @@ using Serilog;
 
 namespace DiscplinaMobileNoite.Application.Services
 {
-    public class AttendanceRecordService : IPointService
+    public class PointService : IPointService
     {
         private readonly IRepositoryUoW _repositoryUoW;
 
-        public AttendanceRecordService(IRepositoryUoW repositoryUoW)
+        public PointService(IRepositoryUoW repositoryUoW)
         {
             _repositoryUoW = repositoryUoW;
         }
@@ -32,6 +33,7 @@ namespace DiscplinaMobileNoite.Application.Services
 
                 attendanceRecordEntity.CreatedAt = DateTime.SpecifyKind(attendanceRecordEntity.CreatedAt, DateTimeKind.Utc);
                 attendanceRecordEntity.Date = DateTime.SpecifyKind(attendanceRecordEntity.Date, DateTimeKind.Utc);
+                attendanceRecordEntity.Status = PointStatus.InProgress;
 
                 var result = await _repositoryUoW.AttendanceRecordRepository.Add(attendanceRecordEntity);
 

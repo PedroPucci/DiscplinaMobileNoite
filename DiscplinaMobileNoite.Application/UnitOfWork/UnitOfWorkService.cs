@@ -9,8 +9,8 @@ namespace DiscplinaMobileNoite.Application.UnitOfWork
         private readonly IRepositoryUoW _repositoryUoW;
 
         private UserService userService;
-        private AttendanceRecordService attendanceRecordService;
-        private AttendanceJustificationService attendanceJustificationService;
+        private PointService attendanceRecordService;
+        private JustificationService attendanceJustificationService;
 
         public UnitOfWorkService(IRepositoryUoW repositoryUoW)
         {
@@ -27,22 +27,22 @@ namespace DiscplinaMobileNoite.Application.UnitOfWork
             }
         }
 
-        public AttendanceRecordService AttendanceRecordService
+        public PointService AttendanceRecordService
         {
             get
             {
                 if (attendanceRecordService is null)
-                    attendanceRecordService = new AttendanceRecordService(_repositoryUoW);
+                    attendanceRecordService = new PointService(_repositoryUoW);
                 return attendanceRecordService;
             }
         }
 
-        public AttendanceJustificationService AttendanceJustificationService
+        public JustificationService AttendanceJustificationService
         {
             get
             {
                 if (attendanceJustificationService is null)
-                    attendanceJustificationService = new AttendanceJustificationService(_repositoryUoW);
+                    attendanceJustificationService = new JustificationService(_repositoryUoW);
                 return attendanceJustificationService;
             }
         }
