@@ -1,5 +1,4 @@
-﻿using DiscplinaMobileNoite.Domain.Entity;
-using DiscplinaMobileNoite.Infrastracture.Repository.Interfaces;
+﻿using DiscplinaMobileNoite.Infrastracture.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW

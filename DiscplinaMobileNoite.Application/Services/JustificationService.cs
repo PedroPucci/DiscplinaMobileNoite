@@ -17,39 +17,46 @@ namespace DiscplinaMobileNoite.Application.Services
         {
             _repositoryUoW = repositoryUoW;
         }
-
         public async Task<Result<JustificationEntity>> Add(JustificationEntity justificationEntity)
         {
             using var transaction = _repositoryUoW.BeginTransaction();
             try
             {
-                var isValidAttendanceJustification = await IsValidAttendanceJustificationRequest(justificationEntity);
-
-                if (!isValidAttendanceJustification.Success)
+                var isValid = await IsValidAttendanceJustificationRequest(justificationEntity);
+                if (!isValid.Success)
                 {
                     Log.Error(LogMessages.InvalidAttendanceRecordInputs());
-                    return Result<JustificationEntity>.Error(isValidAttendanceJustification.Message);
+                    return Result<JustificationEntity>.Error(isValid.Message);
                 }
-                
-                var justification = new JustificationEntity
+
+                Result<JustificationEntity> result;
+
+                if (justificationEntity.PointId == null || justificationEntity.PointId == 0)
                 {
-                    Id = justificationEntity.Id,
-                    Reason = justificationEntity.Reason,
-                    Status = JustificationStatus.Pending,
-                };
+                    result = await HandleAbsenceJustification(justificationEntity);
+                }
+                else
+                {
+                    result = await HandleIncompletePointJustification(justificationEntity);
+                }
 
-                var result = await _repositoryUoW.AttendanceJustificationRepository.Add(justification);
+                if (result.Success)
+                {
+                    await _repositoryUoW.SaveAsync();
+                    await transaction.CommitAsync();
+                }
+                else
+                {
+                    transaction.Rollback();
+                }
 
-                await _repositoryUoW.SaveAsync();
-                await transaction.CommitAsync();
-
-                return Result<JustificationEntity>.Ok();
+                return result;
             }
             catch (Exception ex)
             {
                 Log.Error(LogMessages.AddingAttendanceJustificationError(ex));
                 transaction.Rollback();
-                throw new InvalidOperationException("Error to add a new Justification");
+                throw new InvalidOperationException("Error to add a new Justification", ex);
             }
             finally
             {
@@ -91,6 +98,64 @@ namespace DiscplinaMobileNoite.Application.Services
             }
 
             return Result<JustificationEntity>.Ok();
+        }
+
+        private async Task<Result<JustificationEntity>> HandleAbsenceJustification(JustificationEntity justificationEntity)
+        {
+            var date = justificationEntity.Date.Date;
+            var userId = justificationEntity.UserId;
+
+            var isPast = date < DateTime.UtcNow.Date;
+            if (!isPast)
+                return Result<JustificationEntity>.Error("You can only justify absences for past dates.");
+
+            var existingPoint = await _repositoryUoW.AttendanceRecordRepository.GetByUserIdAndDate(userId, date);
+
+            if (existingPoint != null)
+                return Result<JustificationEntity>.Error("A point record already exists for this date.");
+
+            var justification = new JustificationEntity
+            {
+                UserId = userId,
+                Date = date,
+                Reason = justificationEntity.Reason,
+                Status = JustificationStatus.Pending,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _repositoryUoW.AttendanceJustificationRepository.Add(justification);
+
+            return Result<JustificationEntity>.Ok("Justification saved", justification);
+        }
+
+        private async Task<Result<JustificationEntity>> HandleIncompletePointJustification(JustificationEntity justificationEntity)
+        {
+            var point = await _repositoryUoW.AttendanceRecordRepository.GetById(justificationEntity.PointId ?? 0);
+
+            if (point == null)
+                return Result<JustificationEntity>.Error("Point record not found.");
+
+            var isIncomplete = point.MorningEntry == null ||
+                               point.MorningExit == null ||
+                               point.AfternoonEntry == null ||
+                               point.AfternoonExit == null;
+
+            if (!isIncomplete)
+                return Result<JustificationEntity>.Error("This point is complete and does not require justification.");
+
+            var justification = new JustificationEntity
+            {
+                UserId = point.UserId,
+                Date = point.Date,
+                PointId = point.Id,
+                Reason = justificationEntity.Reason,
+                Status = JustificationStatus.Pending,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _repositoryUoW.AttendanceJustificationRepository.Add(justification);
+
+            return Result<JustificationEntity>.Ok("Justification saved", justification);
         }
     }
 }

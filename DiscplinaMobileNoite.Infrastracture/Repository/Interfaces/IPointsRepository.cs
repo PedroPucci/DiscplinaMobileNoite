@@ -8,5 +8,6 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Interfaces
         PointEntity Update(PointEntity pointEntity);
         Task<List<PointEntity>> Get();
         Task<PointEntity?> GetById(int? id);
+        Task<PointEntity?> GetByUserIdAndDate(int userId, DateTime date);
     }
 }

@@ -4,6 +4,7 @@ namespace DiscplinaMobileNoite.Domain.Entity
 {
     public class UserEntity
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public string? FullName { get; set; }
         public string? Email { get; set; }

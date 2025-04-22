@@ -54,5 +54,11 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
             var response = _context.Points.Update(pointEntity);
             return response.Entity;
         }
+
+        public async Task<PointEntity?> GetByUserIdAndDate(int userId, DateTime date)
+        {
+            return await _context.Points
+                .FirstOrDefaultAsync(p => p.UserId == userId && p.Date.Date == date.Date);
+        }
     }
 }

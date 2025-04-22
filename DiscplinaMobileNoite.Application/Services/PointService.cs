@@ -31,8 +31,8 @@ namespace DiscplinaMobileNoite.Application.Services
                     return Result<PointEntity>.Error(isValidAttendanceRecord.Message);
                 }
 
-                attendanceRecordEntity.CreatedAt = DateTime.SpecifyKind(attendanceRecordEntity.CreatedAt, DateTimeKind.Utc);
-                attendanceRecordEntity.Date = DateTime.SpecifyKind(attendanceRecordEntity.Date, DateTimeKind.Utc);
+                attendanceRecordEntity.CreatedAt = DateTime.UtcNow;
+                attendanceRecordEntity.Date = DateTime.UtcNow;
                 attendanceRecordEntity.Status = PointStatus.InProgress;
 
                 var result = await _repositoryUoW.AttendanceRecordRepository.Add(attendanceRecordEntity);
@@ -54,6 +54,7 @@ namespace DiscplinaMobileNoite.Application.Services
                 transaction.Dispose();
             }
         }
+
         public async Task<List<PointEntity>> Get()
         {
             using var transaction = _repositoryUoW.BeginTransaction();
