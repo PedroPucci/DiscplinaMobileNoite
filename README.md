@@ -57,6 +57,9 @@
 - **Alterações Realizadas:**  
   Ajustadas as classes `Program` e `RepositoryUoW` para integrar o middleware.
 
+- **Modelo de banco de dados:**
+- ![image](https://github.com/user-attachments/assets/40a892b0-b2ca-431e-81ca-3ad75729e593)
+
 - **Mensagens de Erro:**  
   - Se o banco de dados não existir, os endpoints retornam:  
     ```text
