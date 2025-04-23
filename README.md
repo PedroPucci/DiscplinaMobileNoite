@@ -1,8 +1,5 @@
 # **Descrição**
-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-## **Objetivo**
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- Criar um sistema de ponto para os usuários. Nesse sistema é preciso que cria um usuário, depois é feito o login. As demais funções são cadastrar os registros de pontos de entrada e saída, visualizar os dias com as presenças e por fim tem a função para cadastrar uma justificativa para ausência do dia ou atraso do dia.
 
 ## **Requisitos Funcionais**
 1. Usuários(Create/Update): O sistema permite a criação de novos usuários, como também a atualização de dados desse mesmo usuário.
