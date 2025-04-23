@@ -8,6 +8,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW
         IUserRepository UserRepository { get; }
         IPointsRepository AttendanceRecordRepository { get; }
         IJustificationRepository AttendanceJustificationRepository { get; }
+        IRecoverPasswordRepository RecoverPasswordRepository { get; }
 
         Task SaveAsync();
         void Commit();

@@ -7,5 +7,6 @@ namespace DiscplinaMobileNoite.Application.UnitOfWork
         UserService UserService { get; }
         PointService AttendanceRecordService { get; }
         JustificationService AttendanceJustificationService { get; }
+        RecoverPasswordService RecoverPasswordService { get; }
     }
 }
