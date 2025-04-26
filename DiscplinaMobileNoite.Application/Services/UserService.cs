@@ -31,6 +31,14 @@ namespace DiscplinaMobileNoite.Application.Services
                     return Result<UserEntity>.Error(isValidUser.Message);
                 }
 
+                var checkEmail = await _repositoryUoW.UserRepository.GetByEmail(userEntity.Email);
+
+                if (checkEmail is not null)
+                {
+                    Log.Error(LogMessages.InvalidEmail());
+                    return Result<UserEntity>.Error("This email already exists. Please use another one.");
+                }
+
                 userEntity.Email = userEntity.Email?.Trim().ToLower();
                 var result = await _repositoryUoW.UserRepository.Add(userEntity);
 
@@ -48,28 +56,6 @@ namespace DiscplinaMobileNoite.Application.Services
             finally
             {
                 Log.Error(LogMessages.AddingUserSuccess());
-                transaction.Dispose();
-            }
-        }
-
-        public async Task<List<UserResponse>> Get()
-        {
-            using var transaction = _repositoryUoW.BeginTransaction();
-            try
-            {
-                List<UserResponse> userEntities = await _repositoryUoW.UserRepository.Get();
-                _repositoryUoW.Commit();
-                return userEntities;
-            }
-            catch (Exception ex)
-            {
-                Log.Error(LogMessages.GetAllUserError(ex));
-                transaction.Rollback();
-                throw new InvalidOperationException("Error to loading the list User");
-            }
-            finally
-            {
-                Log.Error(LogMessages.GetAllUserSuccess());
                 transaction.Dispose();
             }
         }

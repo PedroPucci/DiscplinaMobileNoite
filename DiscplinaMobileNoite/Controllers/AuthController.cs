@@ -15,7 +15,7 @@ namespace DiscplinaMobileNoite.Controllers
             _serviceUoW = unitOfWorkService;
         }
 
-        [HttpPost()]
+        [HttpPatch()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RecoverPassword([FromBody] RecoverPasswordResponse recoverPasswordResponse)
@@ -23,7 +23,7 @@ namespace DiscplinaMobileNoite.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _serviceUoW.RecoverPasswordService.RecoverPassword(recoverPasswordResponse);
+            var result = await _serviceUoW.RecoverPasswordService.RecoverPasswordAsync(recoverPasswordResponse);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

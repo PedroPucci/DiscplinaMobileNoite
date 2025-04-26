@@ -3,10 +3,13 @@
     public static class LogMessages
     {
         //User
+        public static string InvalidEmail() => "Message: This email exist.";
         public static string InvalidUserInputs() => "Message: Invalid inputs to User.";
         public static string NullOrEmptyUserEmail() => "Message: The Email field is null, empty, or whitespace.";
         public static string UpdatingErrorUser(Exception ex) => $"Message: Error updating User: {ex.Message}";
         public static string UpdatingSuccessUser() => "Message: Successfully updated User.";
+        public static string UpdatingSuccessRecoverPassword() => "Message: Successfully updated User password.";
+        public static string UpdatingErrorRecoverPassword(Exception ex) => "Message: Error updating User password.";
         public static string UserNotFound(string action) => $"Message: User not found for {action} action.";
         public static string AddingUserError(Exception ex) => $"Message: Error adding a new User: {ex.Message}";
         public static string AddingUserSuccess() => "Message: Successfully added a new User.";

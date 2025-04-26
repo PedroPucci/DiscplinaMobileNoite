@@ -14,7 +14,8 @@ namespace DiscplinaMobileNoite.Extensions.SwaggerDocumentation
                 {
                     { "user", () => HandleUserOperations(operation, context) },
                     { "points", () => HandlePointOperations(operation, context) },
-                    { "justification", () => HandleJustificationOperations(operation, context) }
+                    { "justification", () => HandleJustificationOperations(operation, context) },
+                    { "recoverPassword", () => HandleRecoverPasswordOperations(operation, context) }
                 };
 
             foreach (var routeHandler in routeHandlers)
@@ -133,6 +134,19 @@ namespace DiscplinaMobileNoite.Extensions.SwaggerDocumentation
                     operation.Description = "This endpoint allows you to retrieve details of all existing justifications.";
                     AddResponses(operation, "200", "All justifications details were successfully retrieved.");
                 }
+            }
+        }
+
+        private void HandleRecoverPasswordOperations(OpenApiOperation operation, OperationFilterContext context)
+        {
+            var method = context.ApiDescription.HttpMethod;
+            var path = context.ApiDescription.RelativePath?.ToLower() ?? string.Empty;
+
+            if (method == "PUT")
+            {
+                operation.Summary = "Update an existing recover password.";
+                operation.Description = "This endpoint allows you to update an existing recover password by providing the necessary details.";
+                AddResponses(operation, "200", "The recover password was successfully updated.");
             }
         }
 

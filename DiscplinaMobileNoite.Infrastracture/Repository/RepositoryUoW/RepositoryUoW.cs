@@ -13,23 +13,10 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.RepositoryUoW
         private IUserRepository? _userEntityRepository = null;
         private IPointsRepository? _attendanceRecord = null;
         private IJustificationRepository? _attendanceJustification = null;
-        private IRecoverPasswordRepository? _recoverPasswordRepository = null;
 
         public RepositoryUoW(DataContext context)
         {
             _context = context;
-        }
-
-        public IRecoverPasswordRepository RecoverPasswordRepository
-        {
-            get
-            {
-                if (_recoverPasswordRepository is null)
-                {
-                    _recoverPasswordRepository = new RecoverPasswordRepository(_context);
-                }
-                return _recoverPasswordRepository;
-            }
         }
 
         public IPointsRepository AttendanceRecordRepository

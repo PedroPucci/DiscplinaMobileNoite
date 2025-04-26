@@ -37,14 +37,5 @@ namespace DiscplinaMobileNoite.Controllers
             var result = await _serviceUoW.UserService.Update(userEntity);
             return result.Success ? Ok(result) : BadRequest(userEntity);
         }
-
-        [HttpGet("All")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<UserResponse>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get()
-        {
-            var result = await _serviceUoW.UserService.Get();
-            return Ok(result);
-        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using DiscplinaMobileNoite.Domain.Dto;
-using DiscplinaMobileNoite.Domain.Entity;
+﻿using DiscplinaMobileNoite.Domain.Entity;
 
 namespace DiscplinaMobileNoite.Infrastracture.Repository.Interfaces
 {
@@ -7,8 +6,9 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Interfaces
     {
         Task<UserEntity> Add(UserEntity userEntity);
         UserEntity Update(UserEntity userEntity);
+        UserEntity UpdateEmail(string? email, string? newPassword);
         UserEntity Delete(UserEntity userEntity);
-        Task<List<UserResponse>> Get();
         Task<UserEntity?> GetById(int? id);
+        Task<UserEntity?> GetByEmail(string? email);
     }
 }

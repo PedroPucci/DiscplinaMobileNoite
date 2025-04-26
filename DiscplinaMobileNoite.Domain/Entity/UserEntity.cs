@@ -11,6 +11,7 @@ namespace DiscplinaMobileNoite.Domain.Entity
         public string? Password { get; set; }
         public int Workload { get; set; }
         public int PhoneNumber { get; set; }
+        [JsonIgnore]
         public DateTime CreatedAt { get; set; }
 
         [JsonIgnore]
