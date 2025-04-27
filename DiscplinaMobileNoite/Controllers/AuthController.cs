@@ -15,7 +15,7 @@ namespace DiscplinaMobileNoite.Controllers
             _serviceUoW = unitOfWorkService;
         }
 
-        [HttpPatch()]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RecoverPassword([FromBody] RecoverPasswordResponse recoverPasswordResponse)
