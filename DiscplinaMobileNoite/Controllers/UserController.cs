@@ -32,10 +32,10 @@ namespace DiscplinaMobileNoite.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Update([FromBody] UserEntity userEntity)
+        public async Task<IActionResult> Update([FromBody] UserResponse userResponse)
         {
-            var result = await _serviceUoW.UserService.Update(userEntity);
-            return result.Success ? Ok(result) : BadRequest(userEntity);
+            var result = await _serviceUoW.UserService.Update(userResponse);
+            return result.Success ? Ok(result) : BadRequest(userResponse);
         }
     }
 }

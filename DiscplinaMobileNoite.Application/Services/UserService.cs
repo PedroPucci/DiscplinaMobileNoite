@@ -60,20 +60,21 @@ namespace DiscplinaMobileNoite.Application.Services
             }
         }
 
-        public async Task<Result<UserEntity>> Update(UserEntity userEntity)
+        public async Task<Result<UserEntity>> Update(UserResponse userResponse)
         {
             using var transaction = _repositoryUoW.BeginTransaction();
             try
             {
-                var userById = await _repositoryUoW.UserRepository.GetById(userEntity.Id);
+                var userById = await _repositoryUoW.UserRepository.GetById(userResponse.Id);
                 if (userById is null)
                     throw new InvalidOperationException("Error updating User");
 
-                userById.Email = userEntity.Email;
-                userById.Password = userEntity.Password;
-                userById.PhoneNumber = userEntity.PhoneNumber;
-                userById.Workload = userEntity.Workload;
-                userById.FullName = userEntity.FullName;
+                if (userResponse.Password != userResponse.ConfirmPassword)
+                    throw new InvalidOperationException("the passwords are different");
+
+                userById.FullName = userResponse.FullName;
+                userById.Email = userResponse.Email;
+                userById.Password = userResponse.Password;               
                 
                 _repositoryUoW.UserRepository.Update(userById);
 
