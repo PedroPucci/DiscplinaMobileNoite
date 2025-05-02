@@ -37,5 +37,19 @@ namespace DiscplinaMobileNoite.Controllers
             var result = await _serviceUoW.UserService.Update(userResponse);
             return result.Success ? Ok(result) : BadRequest(userResponse);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _serviceUoW.UserService.GetById(id);
+
+            if (result == null)
+                return NotFound($"Usuário com ID {id} não encontrado.");
+
+            return Ok(result);
+        }
+
     }
 }

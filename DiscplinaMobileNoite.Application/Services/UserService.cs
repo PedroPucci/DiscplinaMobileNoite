@@ -95,6 +95,23 @@ namespace DiscplinaMobileNoite.Application.Services
             }
         }
 
+        public async Task<UserResponse?> GetById(int id)
+        {
+            var user = await _repositoryUoW.UserRepository.GetById(id);
+
+            if (user is null)
+                return null;
+
+            return new UserResponse
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,                
+                Password = user.Password,
+                ConfirmPassword = user.Password
+            };
+        }
+
         private async Task<Result<UserEntity>> IsValidUserRequest(UserEntity userEntity)
         {
             var requestValidator = await new UserRequestValidator().ValidateAsync(userEntity);
