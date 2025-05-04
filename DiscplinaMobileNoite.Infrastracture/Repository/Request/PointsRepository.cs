@@ -63,5 +63,24 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
                 .Where(p => p.UserId == userId && p.Date.Date == utcDate.Date)
                 .ToListAsync();
         }
+
+        public async Task<List<PointEntity>> GetByUserIdAndDate(int userId, DateTime date)
+        {
+            var utcDate = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
+
+            return await _context.Points
+                .Where(p => p.UserId == userId && p.Date.Date == utcDate.Date)
+                .ToListAsync();
+        }
+
+        public async Task<List<JustificationEntity>> GetByUserId(int userId)
+        {
+            return await _context.Justifications
+                .Where(j => j.UserId == userId)
+                .Include(j => j.PointsEntity) // inclui os dados do ponto, se necessário
+                .OrderByDescending(j => j.Date)
+                .ToListAsync();
+        }
+
     }
 }

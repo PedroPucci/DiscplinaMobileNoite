@@ -4,6 +4,7 @@
     {
         InProgress = 1,
         Pending = 2,
-        Completed = 3
+        Completed = 3,
+        Absence = 4,
     }
 }

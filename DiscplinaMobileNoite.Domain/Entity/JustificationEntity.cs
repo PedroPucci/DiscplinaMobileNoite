@@ -12,6 +12,7 @@ namespace DiscplinaMobileNoite.Domain.Entity
         public DateTime Date { get; set; }
         public string? Reason { get; set; }
         public JustificationStatus Status { get; set; }
+        public JustificationCase Case { get; set; }
         public DateTime CreatedAt { get; set; }
         
         [JsonIgnore]

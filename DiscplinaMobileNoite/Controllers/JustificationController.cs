@@ -26,14 +26,5 @@ namespace DiscplinaMobileNoite.Controllers
             var result = await _serviceUoW.AttendanceJustificationService.Add(attendanceJustificationEntity);
             return result.Success ? Ok(result) : BadRequest(result);
         }
-
-        [HttpGet("All")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<JustificationEntity>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Get()
-        {
-            var result = await _serviceUoW.AttendanceJustificationService.Get();
-            return Ok(result);
-        }
     }
 }

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiscplinaMobileNoite.Infrastracture.Migrations
 {
     /// <inheritdoc />
-    public partial class primeira : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,6 +67,7 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Reason = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
+                    Case = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
