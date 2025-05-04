@@ -35,5 +35,12 @@ namespace DiscplinaMobileNoite.Controllers
             var result = await _serviceUoW.AttendanceRecordService.Get();
             return Ok(result);
         }
+
+        [HttpGet("user/{userId}/date/{date}")]
+        public async Task<IActionResult> GetAllByUserAndDate(int userId, DateTime date)
+        {
+            var registros = await _serviceUoW.AttendanceRecordService.GetByUserIdAndDate(userId, date);
+            return Ok(registros);
+        }
     }
 }

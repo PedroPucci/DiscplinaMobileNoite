@@ -55,10 +55,13 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
             return response.Entity;
         }
 
-        public async Task<PointEntity?> GetByUserIdAndDate(int userId, DateTime date)
+        public async Task<List<PointEntity>> GetAllByUserIdAndDate(int userId, DateTime date)
         {
+            var utcDate = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
+
             return await _context.Points
-                .FirstOrDefaultAsync(p => p.UserId == userId && p.Date.Date == date.Date);
+                .Where(p => p.UserId == userId && p.Date.Date == utcDate.Date)
+                .ToListAsync();
         }
     }
 }

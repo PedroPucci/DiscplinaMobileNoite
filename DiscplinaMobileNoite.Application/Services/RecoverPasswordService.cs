@@ -39,7 +39,8 @@ namespace DiscplinaMobileNoite.Application.Services
                 await _repositoryUoW.SaveAsync();
                 await transaction.CommitAsync();
 
-                return Result<RecoverPasswordResponse>.Ok();
+                recoverPasswordResponse.Password = newPassword;
+                return Result<RecoverPasswordResponse>.Ok(recoverPasswordResponse.Password);
             }
             catch (Exception ex)
             {

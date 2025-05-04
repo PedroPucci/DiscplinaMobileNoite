@@ -29,7 +29,7 @@ namespace DiscplinaMobileNoite.Application.Services
                 {
                     Log.Error(LogMessages.InvalidAttendanceRecordInputs());
                     return Result<PointEntity>.Error(isValidAttendanceRecord.Message);
-                }
+                }   
 
                 attendanceRecordEntity.CreatedAt = DateTime.UtcNow;
                 attendanceRecordEntity.Date = DateTime.UtcNow;
@@ -76,6 +76,31 @@ namespace DiscplinaMobileNoite.Application.Services
                 transaction.Dispose();
             }
         }
+
+        public async Task<List<PointEntity>> GetByUserIdAndDate(int userId, DateTime date)
+        {
+            using var transaction = _repositoryUoW.BeginTransaction();
+            try
+            {
+                var records = await _repositoryUoW.AttendanceRecordRepository
+                    .GetAllByUserIdAndDate(userId, date);
+
+                _repositoryUoW.Commit();
+                return records;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(LogMessages.GetAllAttendanceRecordError(ex));
+                transaction.Rollback();
+                throw new InvalidOperationException("Error loading points by userId and date.");
+            }
+            finally
+            {
+                Log.Error(LogMessages.GetAllAttendanceRecordSuccess());
+                transaction.Dispose();
+            }
+        }
+
         private async Task<Result<PointEntity>> IsValidAttendanceRecordRequest(PointEntity attendanceRecordEntity)
         {
             var requestValidator = await new PointRequestValidator().ValidateAsync(attendanceRecordEntity);

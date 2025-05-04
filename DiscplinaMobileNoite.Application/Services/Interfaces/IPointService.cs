@@ -7,5 +7,6 @@ namespace DiscplinaMobileNoite.Application.Services.Interfaces
     {
         Task<Result<PointEntity>> Add(PointEntity attendanceRecordEntity);
         Task<List<PointEntity>> Get();
+        Task<List<PointEntity>> GetByUserIdAndDate(int userId, DateTime date);
     }
 }

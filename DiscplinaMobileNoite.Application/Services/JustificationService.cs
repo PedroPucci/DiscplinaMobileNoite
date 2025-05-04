@@ -109,7 +109,7 @@ namespace DiscplinaMobileNoite.Application.Services
             if (!isPast)
                 return Result<JustificationEntity>.Error("You can only justify absences for past dates.");
 
-            var existingPoint = await _repositoryUoW.AttendanceRecordRepository.GetByUserIdAndDate(userId, date);
+            var existingPoint = await _repositoryUoW.AttendanceRecordRepository.GetAllByUserIdAndDate(userId, date);
 
             if (existingPoint != null)
                 return Result<JustificationEntity>.Error("A point record already exists for this date.");
