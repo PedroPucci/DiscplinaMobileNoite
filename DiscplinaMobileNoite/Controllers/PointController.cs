@@ -42,5 +42,18 @@ namespace DiscplinaMobileNoite.Controllers
             var registros = await _serviceUoW.AttendanceRecordService.GetByUserIdAndDate(userId, date);
             return Ok(registros);
         }
+
+        [HttpGet("user/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PointEntity>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByUserId(int userId)
+        {
+            var registros = await _serviceUoW.AttendanceRecordService.GetByUserId(userId);
+
+            if (registros == null || !registros.Any())
+                return NotFound($"Nenhum ponto encontrado para o usuário {userId}.");
+
+            return Ok(registros);
+        }
     }
 }

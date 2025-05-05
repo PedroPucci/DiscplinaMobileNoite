@@ -10,6 +10,6 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Interfaces
         Task<PointEntity?> GetById(int? id);
         Task<List<PointEntity>> GetAllByUserIdAndDate(int userId, DateTime date);
         Task<List<PointEntity>> GetByUserIdAndDate(int userId, DateTime date);
-        Task<List<JustificationEntity>> GetByUserId(int userId);
+        Task<List<PointEntity>> GetByUserId(int userId);
     }
 }

@@ -8,8 +8,7 @@ namespace DiscplinaMobileNoite.Domain.Entity
         [JsonIgnore]
         public int Id { get; set; }
         public int UserId { get; set; }
-
-        [JsonIgnore]
+        //[JsonIgnore]
         public DateTime Date { get; set; }
         public TimeSpan? MorningEntry { get; set; }
         public TimeSpan? MorningExit { get; set; }

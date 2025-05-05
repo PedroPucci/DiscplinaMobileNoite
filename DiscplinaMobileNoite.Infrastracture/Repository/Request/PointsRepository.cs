@@ -73,14 +73,13 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
                 .ToListAsync();
         }
 
-        public async Task<List<JustificationEntity>> GetByUserId(int userId)
+        public async Task<List<PointEntity>> GetByUserId(int userId)
         {
-            return await _context.Justifications
-                .Where(j => j.UserId == userId)
-                .Include(j => j.PointsEntity) // inclui os dados do ponto, se necessário
-                .OrderByDescending(j => j.Date)
+            return await _context.Points
+                .Where(p => p.UserId == userId)
+                //.Include(p => p.JustificationEntity)
+                .OrderByDescending(p => p.Date)
                 .ToListAsync();
         }
-
     }
 }

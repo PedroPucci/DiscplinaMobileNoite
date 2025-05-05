@@ -32,8 +32,31 @@ namespace DiscplinaMobileNoite.Application.Services
                 }   
 
                 attendanceRecordEntity.CreatedAt = DateTime.UtcNow;
-                attendanceRecordEntity.Date = DateTime.UtcNow;
-                attendanceRecordEntity.Status = PointStatus.InProgress;
+                attendanceRecordEntity.Date = DateTime.SpecifyKind(attendanceRecordEntity.Date, DateTimeKind.Utc);
+                // Após salvar, verificar se todos os pontos do dia estão completos
+                var pontosDoDia = await _repositoryUoW.AttendanceRecordRepository
+                    .GetByUserIdAndDate(attendanceRecordEntity.UserId, attendanceRecordEntity.Date);
+
+                int totalCampos = pontosDoDia.Count * 4;
+                int camposPreenchidos = 0;
+
+                foreach (var ponto in pontosDoDia)
+                {
+                    if (ponto.MorningEntry.HasValue) camposPreenchidos++;
+                    if (ponto.MorningExit.HasValue) camposPreenchidos++;
+                    if (ponto.AfternoonEntry.HasValue) camposPreenchidos++;
+                    if (ponto.AfternoonExit.HasValue) camposPreenchidos++;
+                }
+
+                // Atualizar status se estiver tudo preenchido
+                if (camposPreenchidos == 3)
+                {
+                    foreach (var ponto in pontosDoDia)
+                    {
+                        ponto.Status = PointStatus.Completed;
+                        _repositoryUoW.AttendanceRecordRepository.Update(ponto);
+                    }
+                }
 
                 var result = await _repositoryUoW.AttendanceRecordRepository.Add(attendanceRecordEntity);
 
@@ -97,6 +120,30 @@ namespace DiscplinaMobileNoite.Application.Services
             finally
             {
                 Log.Error(LogMessages.GetAllAttendanceRecordSuccess());
+                transaction.Dispose();
+            }
+        }
+
+        public async Task<List<PointEntity>> GetByUserId(int userId)
+        {
+            using var transaction = _repositoryUoW.BeginTransaction();
+            try
+            {
+                var records = await _repositoryUoW.AttendanceRecordRepository
+                    .GetByUserId(userId);
+
+                _repositoryUoW.Commit();
+                return records;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(LogMessages.GetAllAttendanceRecordError(ex));
+                transaction.Rollback();
+                throw new InvalidOperationException("Error loading points by userId.", ex);
+            }
+            finally
+            {
+                Log.Information(LogMessages.GetAllAttendanceRecordSuccess());
                 transaction.Dispose();
             }
         }

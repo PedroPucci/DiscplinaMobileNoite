@@ -18,6 +18,114 @@ namespace DiscplinaMobileNoite.Application.Services
             _repositoryUoW = repositoryUoW;
         }
 
+        //public async Task<Result<JustificationEntity>> Add(JustificationEntity justificationEntity)
+        //{
+        //    using var transaction = _repositoryUoW.BeginTransaction();
+
+        //    try
+        //    {
+        //        // 1. Verificar se a data é futura
+        //        if (justificationEntity.Date > DateTime.Now.Date)
+        //            return Result<JustificationEntity>.Error("A data não pode ser maior que a data atual.");
+
+        //        // 2. Buscar pontos do usuário na data
+        //        var pontosNaData = await _repositoryUoW.AttendanceRecordRepository
+        //            .GetByUserIdAndDate(justificationEntity.UserId, justificationEntity.Date);
+
+        //        PointEntity pontoPrincipal;
+        //        int camposPreenchidos = 0;
+        //        int totalCampos = 4 * (pontosNaData?.Count ?? 0); // 4 campos por ponto
+
+        //        if (pontosNaData == null || !pontosNaData.Any())
+        //        {
+        //            // Nenhum ponto → ausência
+        //            pontoPrincipal = new PointEntity
+        //            {
+        //                UserId = justificationEntity.UserId,
+        //                Date = justificationEntity.Date.Date,
+        //                MorningEntry = null,
+        //                MorningExit = null,
+        //                AfternoonEntry = null,
+        //                AfternoonExit = null,
+        //                Status = PointStatus.Absence,
+        //                CreatedAt = DateTime.UtcNow
+        //            };
+
+        //            await _repositoryUoW.AttendanceRecordRepository.Add(pontoPrincipal);
+        //        }
+        //        else
+        //        {
+        //            pontoPrincipal = pontosNaData.First();
+
+        //            foreach (var ponto in pontosNaData)
+        //            {
+        //                if (ponto.MorningEntry.HasValue) camposPreenchidos++;
+        //                if (ponto.MorningExit.HasValue) camposPreenchidos++;
+        //                if (ponto.AfternoonEntry.HasValue) camposPreenchidos++;
+        //                if (ponto.AfternoonExit.HasValue) camposPreenchidos++;
+        //            }
+
+        //            if (camposPreenchidos == 0)
+        //            {
+        //                pontoPrincipal.Status = PointStatus.Absence;
+        //            }
+        //            else if (camposPreenchidos == totalCampos)
+        //            {
+        //                pontoPrincipal.Status = PointStatus.Completed;
+        //            }
+        //            else
+        //            {
+        //                pontoPrincipal.Status = PointStatus.Pending;
+        //            }
+
+        //            _repositoryUoW.AttendanceRecordRepository.Update(pontoPrincipal);
+        //        }
+
+        //        // 3. Criar a justificativa
+        //        var justification = new JustificationEntity
+        //        {
+        //            UserId = justificationEntity.UserId,
+        //            Date = justificationEntity.Date.Date,
+        //            Reason = justificationEntity.Reason,                    
+        //            CreatedAt = DateTime.UtcNow,
+        //            PointId = pontoPrincipal.Id
+        //        };
+
+        //        // 4. Definir o tipo de justificativa com base na situação
+        //        if (pontoPrincipal.Status == PointStatus.Absence)
+        //        {
+        //            pontoPrincipal.Status = PointStatus.Absence;
+        //            justification.Case = (JustificationCase)JustificationStatus.Pending;
+        //        }
+        //        else if (pontoPrincipal.Status == PointStatus.Pending)
+        //        {
+        //            pontoPrincipal.Status = PointStatus.Pending;
+        //            justification.Case = (JustificationCase)JustificationStatus.Pending;
+        //        }
+
+        //        justification.Status = justificationEntity.Status;
+        //        justification.Case = (JustificationCase)justification.Case;
+
+        //        // 5. Salvar justificativa
+        //        await _repositoryUoW.AttendanceJustificationRepository.Add(justification);
+        //        await _repositoryUoW.SaveAsync();
+        //        await transaction.CommitAsync();
+
+        //        return Result<JustificationEntity>.Ok();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error(LogMessages.AddingAttendanceJustificationError(ex));
+        //        await transaction.RollbackAsync();
+        //        throw new InvalidOperationException("Erro ao adicionar justificativa de ponto.", ex);
+        //    }
+        //    finally
+        //    {
+        //        Log.Information(LogMessages.AddingAttendanceJustificationSuccess());
+        //        transaction.Dispose();
+        //    }
+        //}
+
         public async Task<Result<JustificationEntity>> Add(JustificationEntity justificationEntity)
         {
             using var transaction = _repositoryUoW.BeginTransaction();
@@ -42,7 +150,7 @@ namespace DiscplinaMobileNoite.Application.Services
                     pontoPrincipal = new PointEntity
                     {
                         UserId = justificationEntity.UserId,
-                        Date = justificationEntity.Date.Date,
+                        Date = DateTime.SpecifyKind(justificationEntity.Date.Date, DateTimeKind.Utc),
                         MorningEntry = null,
                         MorningExit = null,
                         AfternoonEntry = null,
@@ -55,8 +163,7 @@ namespace DiscplinaMobileNoite.Application.Services
                 }
                 else
                 {
-                    pontoPrincipal = pontosNaData.First();
-
+                    // Contar preenchimentos
                     foreach (var ponto in pontosNaData)
                     {
                         if (ponto.MorningEntry.HasValue) camposPreenchidos++;
@@ -65,46 +172,50 @@ namespace DiscplinaMobileNoite.Application.Services
                         if (ponto.AfternoonExit.HasValue) camposPreenchidos++;
                     }
 
-                    if (camposPreenchidos == 0)
+                    //PointStatus novoStatus;
+                    //if (camposPreenchidos == 0)
+                    //    novoStatus = PointStatus.Absence;
+                    //else if (camposPreenchidos == totalCampos)
+                    //    novoStatus = PointStatus.Completed;
+                    //else
+                    //    novoStatus = PointStatus.Pending;
+
+                    //// Atualizar todos os pontos com novo status
+                    //foreach (var ponto in pontosNaData)
+                    //{
+                    //    ponto.Status = novoStatus;
+                    //    _repositoryUoW.AttendanceRecordRepository.Update(ponto);
+                    //}
+
+                    // Independente da quantidade de campos, forçar como pendente
+                    foreach (var ponto in pontosNaData)
                     {
-                        pontoPrincipal.Status = PointStatus.Absence;
-                    }
-                    else if (camposPreenchidos == totalCampos)
-                    {
-                        pontoPrincipal.Status = PointStatus.Completed;
-                    }
-                    else
-                    {
-                        pontoPrincipal.Status = PointStatus.Pending;
+                        ponto.Status = PointStatus.Pending;
+                        _repositoryUoW.AttendanceRecordRepository.Update(ponto);
                     }
 
-                    _repositoryUoW.AttendanceRecordRepository.Update(pontoPrincipal);
+
+                    pontoPrincipal = pontosNaData.First();
                 }
 
                 // 3. Criar a justificativa
                 var justification = new JustificationEntity
                 {
                     UserId = justificationEntity.UserId,
-                    Date = justificationEntity.Date.Date,
-                    Reason = justificationEntity.Reason,                    
+                    Date = DateTime.SpecifyKind(justificationEntity.Date.Date, DateTimeKind.Utc),
+                    Reason = justificationEntity.Reason,
                     CreatedAt = DateTime.UtcNow,
-                    PointId = pontoPrincipal.Id
+                    PointId = pontoPrincipal.Id,
+                    Status = justificationEntity.Status
                 };
 
-                // 4. Definir o tipo de justificativa com base na situação
-                if (pontoPrincipal.Status == PointStatus.Absence)
+                // 4. Definir o tipo de justificativa com base no status do ponto
+                justification.Case = pontoPrincipal.Status switch
                 {
-                    pontoPrincipal.Status = PointStatus.Absence;
-                    justification.Case = (JustificationCase)JustificationStatus.Pending;
-                }
-                else if (pontoPrincipal.Status == PointStatus.Pending)
-                {
-                    pontoPrincipal.Status = PointStatus.Pending;
-                    justification.Case = (JustificationCase)JustificationStatus.Pending;
-                }
-
-                justification.Status = (JustificationStatus)pontoPrincipal.Status;
-                justification.Case = (JustificationCase)justification.Case;
+                    PointStatus.Absence => JustificationCase.Absence,
+                    PointStatus.Pending => JustificationCase.Oblivion,
+                    _ => justificationEntity.Case
+                };
 
                 // 5. Salvar justificativa
                 await _repositoryUoW.AttendanceJustificationRepository.Add(justification);
@@ -126,75 +237,6 @@ namespace DiscplinaMobileNoite.Application.Services
             }
         }
 
-        //private async Task<Result<JustificationEntity>> IsValidAttendanceJustificationRequest(JustificationEntity attendanceJustificationEntity)
-        //{
-        //    var requestValidator = await new JustificationRequestValidator().ValidateAsync(attendanceJustificationEntity);
-        //    if (!requestValidator.IsValid)
-        //    {
-        //        string errorMessage = string.Join(" ", requestValidator.Errors.Select(e => e.ErrorMessage));
-        //        errorMessage = errorMessage.Replace(Environment.NewLine, "");
-        //        return Result<JustificationEntity>.Error(errorMessage);
-        //    }
 
-        //    return Result<JustificationEntity>.Ok();
-        //}
-
-        //private async Task<Result<JustificationEntity>> HandleAbsenceJustification(JustificationEntity justificationEntity)
-        //{
-        //    var date = justificationEntity.Date.Date;
-        //    var userId = justificationEntity.UserId;
-
-        //    var isPast = date < DateTime.UtcNow.Date;
-        //    if (!isPast)
-        //        return Result<JustificationEntity>.Error("You can only justify absences for past dates.");
-
-        //    var existingPoint = await _repositoryUoW.AttendanceRecordRepository.GetAllByUserIdAndDate(userId, date);
-
-        //    if (existingPoint.Count > 0)
-        //        return Result<JustificationEntity>.Error("A point record already exists for this date.");
-
-        //    var justification = new JustificationEntity
-        //    {
-        //        UserId = userId,
-        //        Date = date,
-        //        Reason = justificationEntity.Reason,
-        //        Status = JustificationStatus.Pending,
-        //        CreatedAt = DateTime.UtcNow
-        //    };
-
-        //    await _repositoryUoW.AttendanceJustificationRepository.Add(justification);
-
-        //    return Result<JustificationEntity>.Ok("Justification saved", justification);
-        //}
-
-        //private async Task<Result<JustificationEntity>> HandleIncompletePointJustification(JustificationEntity justificationEntity)
-        //{
-        //    var point = await _repositoryUoW.AttendanceRecordRepository.GetById(justificationEntity.PointId ?? 0);
-
-        //    if (point == null)
-        //        return Result<JustificationEntity>.Error("Point record not found.");
-
-        //    var isIncomplete = point.MorningEntry == null ||
-        //                       point.MorningExit == null ||
-        //                       point.AfternoonEntry == null ||
-        //                       point.AfternoonExit == null;
-
-        //    if (!isIncomplete)
-        //        return Result<JustificationEntity>.Error("This point is complete and does not require justification.");
-
-        //    var justification = new JustificationEntity
-        //    {
-        //        UserId = point.UserId,
-        //        Date = point.Date,
-        //        PointId = point.Id,
-        //        Reason = justificationEntity.Reason,
-        //        Status = JustificationStatus.Pending,
-        //        CreatedAt = DateTime.UtcNow
-        //    };
-
-        //    await _repositoryUoW.AttendanceJustificationRepository.Add(justification);
-
-        //    return Result<JustificationEntity>.Ok("Justification saved", justification);
-        //}
     }
 }

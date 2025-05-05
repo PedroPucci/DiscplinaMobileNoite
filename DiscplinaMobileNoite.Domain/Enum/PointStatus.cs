@@ -2,8 +2,8 @@
 {
     public enum PointStatus
     {
-        InProgress = 1,
-        Pending = 2,
+        Pending = 1,
+        InProgress = 2,
         Completed = 3,
         Absence = 4,
     }
