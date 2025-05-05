@@ -146,6 +146,14 @@ namespace DiscplinaMobileNoite.Application.Services
             }
         }
 
+        public async Task<List<PointEntity>> GetDailyFrequency(int userId, DateTime date)
+        {
+            var registros = await _repositoryUoW.AttendanceRecordRepository
+                .GetDailyFrequency(userId, date.Date);
+
+            return registros;
+        }
+
         private async Task<Result<PointEntity>> IsValidAttendanceRecordRequest(PointEntity attendanceRecordEntity)
         {
             var requestValidator = await new PointRequestValidator().ValidateAsync(attendanceRecordEntity);

@@ -1,6 +1,8 @@
 ﻿using DiscplinaMobileNoite.Application.UnitOfWork;
 using DiscplinaMobileNoite.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
+using Serilog;
 
 namespace DiscplinaMobileNoite.Controllers
 {
@@ -37,6 +39,8 @@ namespace DiscplinaMobileNoite.Controllers
         }
 
         [HttpGet("user/{userId}/date/{date}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PointEntity>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllByUserAndDate(int userId, DateTime date)
         {
             var registros = await _serviceUoW.AttendanceRecordService.GetByUserIdAndDate(userId, date);
@@ -54,6 +58,16 @@ namespace DiscplinaMobileNoite.Controllers
                 return NotFound($"Nenhum ponto encontrado para o usuário {userId}.");
 
             return Ok(registros);
+        }
+
+        [HttpGet("user/{userId}/frequencies/{date}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PointEntity>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetDailyFrequency(int userId, DateTime date)
+        {
+            var pontos = await _serviceUoW.AttendanceRecordService
+                 .GetDailyFrequency(userId, date.Date);
+            return Ok(pontos);
         }
     }
 }
