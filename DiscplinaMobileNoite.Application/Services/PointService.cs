@@ -33,7 +33,6 @@ namespace DiscplinaMobileNoite.Application.Services
 
                 attendanceRecordEntity.CreatedAt = DateTime.UtcNow;
                 attendanceRecordEntity.Date = DateTime.SpecifyKind(attendanceRecordEntity.Date, DateTimeKind.Utc);
-                // Após salvar, verificar se todos os pontos do dia estão completos
                 var pontosDoDia = await _repositoryUoW.AttendanceRecordRepository
                     .GetByUserIdAndDate(attendanceRecordEntity.UserId, attendanceRecordEntity.Date);
 
@@ -48,7 +47,6 @@ namespace DiscplinaMobileNoite.Application.Services
                     if (ponto.AfternoonExit.HasValue) camposPreenchidos++;
                 }
 
-                // Atualizar status se estiver tudo preenchido
                 if (camposPreenchidos == 3)
                 {
                     foreach (var ponto in pontosDoDia)

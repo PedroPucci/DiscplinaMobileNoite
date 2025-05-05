@@ -5,13 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔹 Kestrel escutando na porta 5000
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5000); // HTTP
+    options.ListenAnyIP(5000);
 });
 
-// 🔹 CORS liberado
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
@@ -25,14 +23,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices(builder.Configuration);
 
-// 🔹 Logs
 LogExtension.InitializeLogger();
 var loggerSerialLog = LogExtension.GetLogger();
 loggerSerialLog.Information("Logging initialized.");
 
 var app = builder.Build();
 
-// 🔹 Ambiente de desenvolvimento
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -42,10 +38,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseRouting(); // ✅ importante em versões < .NET 7
+app.UseRouting();
 
-// 🔹 CORS aplicado uma vez
-//app.UseCors("CorsPolicy");
 app.Use(async (context, next) =>
 {
     context.Response.Headers.TryAdd("Access-Control-Allow-Origin", "*");
@@ -55,21 +49,18 @@ app.Use(async (context, next) =>
     if (context.Request.Method == HttpMethods.Options)
     {
         context.Response.StatusCode = 204;
-        await context.Response.CompleteAsync(); // 🔥 ESSENCIAL
+        await context.Response.CompleteAsync();
         return;
     }
 
     await next.Invoke();
 });
 
-// 🔹 Middleware customizado
 app.UseMiddleware<ExceptionMiddleware>();
 
-// 🔹 Autorização e endpoints
 app.UseAuthorization();
 app.MapControllers();
 
-// 🔹 Migrations
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
