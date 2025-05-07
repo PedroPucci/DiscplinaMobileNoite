@@ -10,7 +10,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy project files and restore dependencies
-COPY ["DiscplinaMobileNoite/DiscplinaMobileNoite.csproj", "DiscplinaMobileNoite/"]
+COPY ["DiscplinaMobileNoite.csproj", "."]
 COPY ["DiscplinaMobileNoite.Application/DiscplinaMobileNoite.Application.csproj", "DiscplinaMobileNoite.Application/"]
 COPY ["DiscplinaMobileNoite.Domain/DiscplinaMobileNoite.Domain.csproj", "DiscplinaMobileNoite.Domain/"]
 COPY ["DiscplinaMobileNoite.Infrastructure/DiscplinaMobileNoite.Infrastructure.csproj", "DiscplinaMobileNoite.Infrastructure/"]
