@@ -10,26 +10,26 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy project files and restore dependencies
-COPY ["DisciplinaMobileNoite/DisciplinaMobileNoite.csproj", "DisciplinaMobileNoite/"]
-COPY ["DisciplinaMobileNoite.Application/DisciplinaMobileNoite.Application.csproj", "DisciplinaMobileNoite.Application/"]
-COPY ["DisciplinaMobileNoite.Domain/DisciplinaMobileNoite.Domain.csproj", "DisciplinaMobileNoite.Domain/"]
-COPY ["DisciplinaMobileNoite.Infrastructure/DisciplinaMobileNoite.Infrastructure.csproj", "DisciplinaMobileNoite.Infrastructure/"]
-COPY ["DisciplinaMobileNoite.Shared/DisciplinaMobileNoite.Shared.csproj", "DisciplinaMobileNoite.Shared/"]
+COPY ["DiscplinaMobileNoite/DisciplinaMobileNoite.csproj", "DisciplinaMobileNoite/"]
+COPY ["DiscplinaMobileNoite.Application/DisciplinaMobileNoite.Application.csproj", "DisciplinaMobileNoite.Application/"]
+COPY ["DiscplinaMobileNoite.Domain/DisciplinaMobileNoite.Domain.csproj", "DisciplinaMobileNoite.Domain/"]
+COPY ["DiscplinaMobileNoite.Infrastructure/DisciplinaMobileNoite.Infrastructure.csproj", "DisciplinaMobileNoite.Infrastructure/"]
+COPY ["DiscplinaMobileNoite.Shared/DisciplinaMobileNoite.Shared.csproj", "DisciplinaMobileNoite.Shared/"]
 
 RUN dotnet restore "DisciplinaMobileNoite/DisciplinaMobileNoite.csproj"
 
 # Copy full source and build
 COPY . .
-WORKDIR "/src/DisciplinaMobileNoite"
+WORKDIR "/src/DsciplinaMobileNoite"
 RUN dotnet build "DisciplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION --no-restore -o /app/build
 
 # Publish the application
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "DisciplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION --no-restore -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "DiscplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION --no-restore -o /app/publish /p:UseAppHost=false
 
 # Final stage - runtime
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DisciplinaMobileNoite.dll"]
+ENTRYPOINT ["dotnet", "DiscplinaMobileNoite.dll"]
