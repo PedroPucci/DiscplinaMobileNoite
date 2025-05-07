@@ -7,22 +7,22 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY ["DiscplinaMobileNoite/DiscplinaMobileNoite.csproj", "DiscplinaMobileNoite/"]
-COPY ["DiscplinaMobileNoite.Application/DiscplinaMobileNoite.Application.csproj", "DiscplinaMobileNoite.Application/"]
-COPY ["DiscplinaMobileNoite.Domain/DiscplinaMobileNoite.Domain.csproj", "DiscplinaMobileNoite.Domain/"]
-COPY ["DiscplinaMobileNoite.Infrastructure/DiscplinaMobileNoite.Infrastructure.csproj", "DiscplinaMobileNoite.Infrastructure/"]
-COPY ["DiscplinaMobileNoite.Shared/DiscplinaMobileNoite.Shared.csproj", "DiscplinaMobileNoite.Shared/"]
+COPY ["DisciplinaMobileNoite/DisciplinaMobileNoite.csproj", "DisciplinaMobileNoite/"]
+COPY ["DisciplinaMobileNoite.Application/DisciplinaMobileNoite.Application.csproj", "DisciplinaMobileNoite.Application/"]
+COPY ["DisciplinaMobileNoite.Domain/DisciplinaMobileNoite.Domain.csproj", "DisciplinaMobileNoite.Domain/"]
+COPY ["DisciplinaMobileNoite.Infrastructure/DisciplinaMobileNoite.Infrastructure.csproj", "DisciplinaMobileNoite.Infrastructure/"]
+COPY ["DisciplinaMobileNoite.Shared/DisciplinaMobileNoite.Shared.csproj", "DisciplinaMobileNoite.Shared/"]
 
-RUN dotnet restore "DiscplinaMobileNoite/DiscplinaMobileNoite.csproj"
+RUN dotnet restore "DisciplinaMobileNoite/DisciplinaMobileNoite.csproj"
 COPY . .
-WORKDIR "/src/DiscplinaMobileNoite"
-RUN dotnet build "DiscplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/DisciplinaMobileNoite"
+RUN dotnet build "DisciplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "DiscplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "DisciplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "DiscplinaMobileNoite.dll"]
+ENTRYPOINT ["dotnet", "DisciplinaMobileNoite.dll"]
