@@ -10,18 +10,18 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copy project files and restore dependencies
-COPY ["DiscplinaMobileNoite/DisciplinaMobileNoite.csproj", "DisciplinaMobileNoite/"]
-COPY ["DiscplinaMobileNoite.Application/DisciplinaMobileNoite.Application.csproj", "DisciplinaMobileNoite.Application/"]
-COPY ["DiscplinaMobileNoite.Domain/DisciplinaMobileNoite.Domain.csproj", "DisciplinaMobileNoite.Domain/"]
-COPY ["DiscplinaMobileNoite.Infrastructure/DisciplinaMobileNoite.Infrastructure.csproj", "DisciplinaMobileNoite.Infrastructure/"]
-COPY ["DiscplinaMobileNoite.Shared/DisciplinaMobileNoite.Shared.csproj", "DisciplinaMobileNoite.Shared/"]
+COPY ["DiscplinaMobileNoite/DiscplinaMobileNoite.csproj", "DiscplinaMobileNoite/"]
+COPY ["DiscplinaMobileNoite.Application/DiscplinaMobileNoite.Application.csproj", "DiscplinaMobileNoite.Application/"]
+COPY ["DiscplinaMobileNoite.Domain/DiscplinaMobileNoite.Domain.csproj", "DiscplinaMobileNoite.Domain/"]
+COPY ["DiscplinaMobileNoite.Infrastructure/DiscplinaMobileNoite.Infrastructure.csproj", "DiscplinaMobileNoite.Infrastructure/"]
+COPY ["DiscplinaMobileNoite.Shared/DiscplinaMobileNoite.Shared.csproj", "DiscplinaMobileNoite.Shared/"]
 
-RUN dotnet restore "DisciplinaMobileNoite/DisciplinaMobileNoite.csproj"
+RUN dotnet restore "DiscplinaMobileNoite/DiscplinaMobileNoite.csproj"
 
 # Copy full source and build
 COPY . .
 WORKDIR "/src/DsciplinaMobileNoite"
-RUN dotnet build "DisciplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION --no-restore -o /app/build
+RUN dotnet build "DiscplinaMobileNoite.csproj" -c $BUILD_CONFIGURATION --no-restore -o /app/build
 
 # Publish the application
 FROM build AS publish
