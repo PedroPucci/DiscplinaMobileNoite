@@ -7,12 +7,11 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-COPY ["DisciplinaMobileNoite/DisciplinaMobileNoite.csproj", "DisciplinaMobileNoite/"]
-COPY ["DisciplinaMobileNoite.Application/DisciplinaMobileNoite.Application.csproj", "DisciplinaMobileNoite.Application/"]
-COPY ["DisciplinaMobileNoite.Domain/DisciplinaMobileNoite.Domain.csproj", "DisciplinaMobileNoite.Domain/"]
-COPY ["DisciplinaMobileNoite.Infrastructure/DisciplinaMobileNoite.Infrastructure.csproj", "DisciplinaMobileNoite.Infrastructure/"]
-COPY ["DisciplinaMobileNoite.Shared/DisciplinaMobileNoite.Shared.csproj", "DisciplinaMobileNoite.Shared/"]
-
+COPY ["DiscplinaMobileNoite/DiscplinaMobileNoite.csproj", "DiscplinaMobileNoite/"]
+COPY ["DiscplinaMobileNoite.Application/DiscplinaMobileNoite.Application.csproj", "DiscplinaMobileNoite.Application/"]
+COPY ["DiscplinaMobileNoite.Domain/DiscplinaMobileNoite.Domain.csproj", "DiscplinaMobileNoite.Domain/"]
+COPY ["DiscplinaMobileNoite.Infrastracture/DiscplinaMobileNoite.Infrastracture.csproj", "DiscplinaMobileNoite.Infrastracture/"]
+COPY ["DiscplinaMobileNoite.Shared/DiscplinaMobileNoite.Shared.csproj", "DiscplinaMobileNoite.Shared/"]
 
 RUN dotnet restore "DiscplinaMobileNoite/DiscplinaMobileNoite.csproj"
 COPY . .
