@@ -39,7 +39,16 @@ namespace DiscplinaMobileNoite.Application.Services
                     pontoPrincipal = new PointEntity
                     {
                         UserId = justificationEntity.UserId,
-                        Date = DateTime.SpecifyKind(justificationEntity.Date.Date, DateTimeKind.Utc),
+                        //Date = DateTime.SpecifyKind(justificationEntity.Date.Date, DateTimeKind.Utc),
+                        Date = DateTime.SpecifyKind(
+                            new DateTime(
+                                justificationEntity.Date.Year,
+                                justificationEntity.Date.Month,
+                                justificationEntity.Date.Day,
+                                8, 0, 0 // ← 08:00:00
+                            ),
+                            DateTimeKind.Utc
+                        ),
                         MorningEntry = null,
                         MorningExit = null,
                         AfternoonEntry = null,

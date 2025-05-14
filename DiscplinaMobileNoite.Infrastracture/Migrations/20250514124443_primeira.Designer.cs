@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiscplinaMobileNoite.Infrastracture.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250512125923_primeira")]
+    [Migration("20250514124443_primeira")]
     partial class primeira
     {
         /// <inheritdoc />
@@ -127,8 +127,9 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("Workload")
                         .HasColumnType("integer");
