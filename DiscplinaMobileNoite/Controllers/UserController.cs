@@ -59,7 +59,7 @@ namespace DiscplinaMobileNoite.Controllers
             var user = await _serviceUoW.UserService.GetByEmailAndPassword(email, senha);
 
             if (user == null)
-                return NoContent(); // ou return Ok(null); se preferir sempre retornar 200
+                return NoContent();
 
             return Ok(user.Id);
         }
