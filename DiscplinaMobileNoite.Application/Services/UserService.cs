@@ -40,6 +40,7 @@ namespace DiscplinaMobileNoite.Application.Services
                 }
 
                 userEntity.Email = userEntity.Email?.Trim().ToLower();
+                userEntity.CreatedAt = DateTime.UtcNow;
                 var result = await _repositoryUoW.UserRepository.Add(userEntity);
 
                 await _repositoryUoW.SaveAsync();
@@ -107,6 +108,23 @@ namespace DiscplinaMobileNoite.Application.Services
                 Id = user.Id,
                 FullName = user.FullName,
                 Email = user.Email,                
+                Password = user.Password,
+                ConfirmPassword = user.Password
+            };
+        }
+
+        public async Task<UserResponse?> GetByEmailAndPassword(string email, string password)
+        {
+            var user = await _repositoryUoW.UserRepository.GetByEmailAndPassword(email, password);
+
+            if (user is null)
+                return null;
+
+            return new UserResponse
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                Email = user.Email,
                 Password = user.Password,
                 ConfirmPassword = user.Password
             };

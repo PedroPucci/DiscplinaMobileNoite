@@ -10,5 +10,6 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Interfaces
         UserEntity Delete(UserEntity userEntity);
         Task<UserEntity?> GetById(int? id);
         Task<UserEntity?> GetByEmail(string? email);
+        Task<UserEntity?> GetByEmailAndPassword(string email, string password);
     }
 }

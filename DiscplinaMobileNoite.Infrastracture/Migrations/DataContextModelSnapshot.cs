@@ -108,7 +108,8 @@ namespace DiscplinaMobileNoite.Infrastracture.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
+                        .IsRequired()
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")

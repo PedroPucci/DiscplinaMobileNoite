@@ -8,5 +8,6 @@ namespace DiscplinaMobileNoite.Application.Services.Interfaces
     {
         Task<Result<UserEntity>> Add(UserEntity userEntity);
         Task<Result<UserEntity>> Update(UserResponse userResponse);
+        Task<UserResponse?> GetByEmailAndPassword(string email, string password);
     }
 }

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DiscplinaMobileNoite.Infrastracture.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class primeira : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

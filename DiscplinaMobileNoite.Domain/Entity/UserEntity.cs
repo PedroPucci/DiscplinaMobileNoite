@@ -12,7 +12,7 @@ namespace DiscplinaMobileNoite.Domain.Entity
         public int Workload { get; set; }
         public int PhoneNumber { get; set; }
         [JsonIgnore]
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [JsonIgnore]
         public ICollection<PointEntity> PointsEntity { get; set; } = new List<PointEntity>();

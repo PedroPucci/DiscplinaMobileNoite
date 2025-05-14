@@ -51,5 +51,17 @@ namespace DiscplinaMobileNoite.Controllers
             return Ok(result);
         }
 
+        [HttpGet("by-credentials")]
+        [ProducesResponseType(typeof(int?), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> GetUserIdByEmailAndPassword([FromQuery] string email, [FromQuery] string senha)
+        {
+            var user = await _serviceUoW.UserService.GetByEmailAndPassword(email, senha);
+
+            if (user == null)
+                return NoContent(); // ou return Ok(null); se preferir sempre retornar 200
+
+            return Ok(user.Id);
+        }
     }
 }

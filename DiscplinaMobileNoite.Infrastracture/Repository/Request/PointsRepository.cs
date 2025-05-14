@@ -82,14 +82,26 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
                 .ToListAsync();
         }
 
+        //public async Task<List<PointEntity>> GetDailyFrequency(int userId, DateTime date)
+        //{
+        //    var startDateUtc = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
+        //    var endDateUtc = startDateUtc.AddDays(1);
+
+        //    return await _context.Points
+        //        .Where(p => p.UserId == userId && p.Date >= startDateUtc && p.Date < endDateUtc)
+        //        .ToListAsync();
+        //}
         public async Task<List<PointEntity>> GetDailyFrequency(int userId, DateTime date)
         {
-            var startDateUtc = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
-            var endDateUtc = startDateUtc.AddDays(1);
+            var dataUtc = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
 
             return await _context.Points
-                .Where(p => p.UserId == userId && p.Date >= startDateUtc && p.Date < endDateUtc)
+                .AsNoTracking()
+                .Where(p => p.UserId == userId && p.Date.Date == dataUtc)
                 .ToListAsync();
         }
+
+
+
     }
 }

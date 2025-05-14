@@ -55,5 +55,11 @@ namespace DiscplinaMobileNoite.Infrastracture.Repository.Request
             _context.SaveChanges();
             return user;
         }
+
+        public async Task<UserEntity?> GetByEmailAndPassword(string email, string password)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+        }
     }
 }
